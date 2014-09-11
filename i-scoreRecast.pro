@@ -66,12 +66,13 @@ OTHER_FILES += \
 
 INCLUDEPATH += headers
 INCLUDEPATH += /usr/include/libxml2 /usr/local/jamoma/include /usr/local/jamoma/includes
+INCLUDEPATH += plugincurve/include
 
 unix:!macx{
     LIBS += -lJamomaFoundation \
 	    -lJamomaDSP \
 	    -lJamomaScore \
-	    -lJamomaModular
+            -lJamomaModular\
 
 # This variable specifies the #include directories which should be searched when compiling the project.
 INCLUDEPATH += /usr/include/libxml2 \
@@ -103,7 +104,8 @@ macx{
     QMAKE_LFLAGS += -stdlib=libc++
 }
 
-LIBS += -lxml2
+LIBS += -lxml2\
+        -L$$_PRO_FILE_PWD_/plugincurve/lib -lplugincurve
 
 
 

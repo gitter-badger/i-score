@@ -41,6 +41,7 @@ class TTTimeProcess;
 #include "graphicsview.hpp"
 #include "timebox.hpp"
 #include "statedebug.hpp"
+#include "plugincurve.hpp"
 
 #include <QDebug>
 #include <QStateMachine>
@@ -207,8 +208,10 @@ PluginView * TimeboxPresenter::addPlugin(int pluginType, TimeboxStorey *pStorey)
       }
     case AutomationPluginType:
       {
-        AutomationView *automationView = new AutomationView(pStorey);
-        plugin = qgraphicsitem_cast<PluginView*>(automationView);
+        PluginCurve *plugincurve = new PluginCurve(pStorey);
+        //AutomationView *automationView = new AutomationView(pStorey);
+        //plugin = qgraphicsitem_cast<PluginView*>(automationView);
+        plugin = qgraphicsitem_cast<PluginView*>(plugincurve->view());
         break;
       }
     }
