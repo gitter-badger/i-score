@@ -44,7 +44,7 @@ TimeboxSmallView::TimeboxSmallView(TimeboxModel *pModel,  Timebox *parentObject,
   : QGraphicsWidget(parentGraphics), _pModel(pModel) /// @todo parentGraphics n'est pas utilisé, mais appel de Timebox::addChild(Timebox*) dans un second temps (par jC)
 {
   setFlags(QGraphicsItem::ItemIsMovable |
-           QGraphicsItem::ItemIsSelectable |
+           //QGraphicsItem::ItemIsSelectable |
            QGraphicsItem::ItemSendsScenePositionChanges |
            QGraphicsItem::ItemIsFocusable);
 
