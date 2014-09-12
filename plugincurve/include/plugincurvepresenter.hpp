@@ -60,7 +60,7 @@ public:
  static const int MAGNETDIST= 4; // Distance of magnetism attraction.
 private:
 // //----> SUPPRIMER
-// QGraphicsTextItem *_pText;
+ QGraphicsTextItem *_pText;
 // //<---- SUPPRIMER
  QRectF _limitRect; // Limit if the points' area in View coordinate
  QRectF _scale; // Indicates the value of the bottom left point and the topleft point.

@@ -1,9 +1,10 @@
 #ifndef PLUGINCURVEGRID_HPP
 #define PLUGINCURVEGRID_HPP
 
-#include "plugincurveview.hpp"
-#include "plugincurvemap.hpp"
+
 #include <QGraphicsObject>
+class PluginCurveView;
+class PluginCurveMap;
 
 
 class PluginCurveGrid : public QGraphicsObject

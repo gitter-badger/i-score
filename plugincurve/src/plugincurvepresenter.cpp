@@ -47,17 +47,10 @@ knowledge of the CeCILL license and that you accept its terms.
 #include <QCursor>
 #include <QTransform>
 #include <iostream>
-#include <QGraphicsTextItem>
 
 PluginCurvePresenter::PluginCurvePresenter(PluginCurve *parent, PluginCurveModel *model, PluginCurveView *view) :
   QObject(parent),_pModel(model),_pView(view)
 {
-//  //----> SUPPRIMER
-//  _pText = new QGraphicsTextItem(_pView);
-//  _pText->setPos(10,10);
-//  _pText->setPlainText("Blabla");
-//  _pText->show();
-//  //<---- SUPPRIMER
   // ** Initialisation **
   qreal minXValue = 0.01;
   qreal minYValue = -10;
@@ -203,14 +196,18 @@ void PluginCurvePresenter::adjustPoint(PluginCurvePoint *point, QPointF &newPos)
 
 void PluginCurvePresenter::adjustPointMagnetism(QPointF &newPos)
 {
+  // NewPos : Zommer Coordinate
     if (_magnetism == true)
     {
+        PluginCurveZoomer *zoomer = _pView->zoomer();
         QPointF magnetPoint = _pGrid->nearestMagnetPoint(newPos);
-      if (qAbs(newPos.x() - magnetPoint.x()) <= MAGNETDIST) // If the point is near th grid
+        QPointF magnetPointMap = _pView->mapFromItem(zoomer,magnetPoint);
+        QPointF mapPos = _pView->mapFromItem(zoomer,newPos);
+        if (qAbs(mapPos.x() - magnetPointMap.x()) <= MAGNETDIST) // If the point is near th grid
       {
           newPos.setX(magnetPoint.x());
       }
-      if (qAbs(newPos.y() - magnetPoint.y()) <= MAGNETDIST)
+      if (qAbs(mapPos.y() - magnetPointMap.y()) <= MAGNETDIST)
       {
           newPos.setY(magnetPoint.y());
       }
@@ -463,10 +460,6 @@ PluginCurvePoint *PluginCurvePresenter::addPoint(QPointF qpoint, MobilityMode mo
   // Create the point
   point = new PluginCurvePoint(zoomer,this,newPos,_pMap->paintToScale(newPos),mobility,removable);
   emit(notifyPointCreated(_pMap->paintToScale(newPos))); // Notify the user
-//  _pText->setPlainText(QString("Value :%1 , %2 PaintPos : %3 , %4").arg(_pMap->paintToScale(newPos).x())
-                                                                   //.arg(_pMap->paintToScale(newPos).y())
-                                                                   //.arg(newPos.x())
-                                                                   //.arg(newPos.y()));
   //Create a new curve, update previousPoint and point.
   if (previousPoint != nullptr)
     addSection(previousPoint,point);
@@ -731,7 +724,8 @@ void PluginCurvePresenter::keyRelease(QKeyEvent *keyEvent)
 void PluginCurvePresenter::wheelTurned(QGraphicsSceneWheelEvent *event)
 {
     PluginCurveZoomer *zoomer = _pView->zoomer();
-    _pView->zoomer()->zoom(event->pos(),event->delta());
+    QPointF origin = _pView->zoomer()->mapFromItem(_pView,event->pos());
+    _pView->zoomer()->zoom(origin,event->delta());
     // Limit rect coordinate have changed in zoomer's coordinate system
     _pMap->setPaintRect(zoomer->mapRectFromItem(_pView,_limitRect)); // Update map and grid
 }

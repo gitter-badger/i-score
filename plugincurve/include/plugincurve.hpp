@@ -33,9 +33,9 @@ knowledge of the CeCILL license and that you accept its terms.
 
 #include <QObject>
 #include <QGraphicsItem>
-#include "plugincurvemodel.hpp"
-#include "plugincurveview.hpp"
-#include "plugincurvepresenter.hpp"
+class PluginCurveModel;
+class PluginCurveView;
+class PluginCurvePresenter;
 
 class PluginCurve : public QObject
 {

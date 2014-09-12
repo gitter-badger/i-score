@@ -31,11 +31,10 @@ knowledge of the CeCILL license and that you accept its terms.
 #ifndef PLUGINCURVEMODEL_HPP
 #define PLUGINCURVEMODEL_HPP
 #include <QObject>
+#include <QGraphicsObject>
 #include <QRectF>
-#include "plugincurvepoint.hpp"
-#include "plugincurvesection.hpp"
-class GraphicsCurve;
-
+class PluginCurvePoint;
+class PluginCurveSection;
 
 class PluginCurveModel : public QObject
 {

@@ -20,10 +20,10 @@ QPointF PluginCurveMap::scaleToPaint(QPointF val)
 QRectF PluginCurveMap::scaleToPaint(QRectF rect)
 {
     QRectF res;
-    res.setBottomLeft(scaleToPaint(rect.bottomLeft()));
-    res.setBottomRight(scaleToPaint(rect.bottomRight()));
-    res.setTopLeft(scaleToPaint(rect.topLeft()));
-    res.setTopRight(scaleToPaint(rect.topRight()));
+    res.setBottomLeft(scaleToPaint(rect.topLeft()));
+    res.setBottomRight(scaleToPaint(rect.topRight()));
+    res.setTopLeft(scaleToPaint(rect.bottomLeft()));
+    res.setTopRight(scaleToPaint(rect.bottomRight()));
     return res;
 }
 
@@ -31,17 +31,17 @@ QPointF PluginCurveMap::paintToScale(QPointF pos)
 {
     QPointF val;
     val.setX( (pos.x()-_pPaintRect->x())*_pScaleRect->width() /_pPaintRect->width() + _pScaleRect->x() );
-    val.setY( _pScaleRect->y() + (_pPaintRect->height() + _pPaintRect->y() - pos.y()) / _pPaintRect->height() * _pScaleRect->height());
+    val.setY( _pScaleRect->y() + qAbs(_pPaintRect->height() + _pPaintRect->y() - pos.y()) / _pPaintRect->height() * _pScaleRect->height());
     return val;
 }
 
 QRectF PluginCurveMap::paintToScale(QRectF rect)
 {
     QRectF res;
-    res.setBottomLeft(paintToScale(rect.bottomLeft()));
-    res.setBottomRight(paintToScale(rect.bottomRight()));
-    res.setTopLeft(paintToScale(rect.topLeft()));
-    res.setTopRight(paintToScale(rect.topRight()));
+    res.setBottomLeft(paintToScale(rect.topLeft()));
+    res.setBottomRight(paintToScale(rect.topRight()));
+    res.setTopLeft(paintToScale(rect.bottomLeft()));
+    res.setTopRight(paintToScale(rect.bottomRight()));
     return res;
 }
 
@@ -60,7 +60,6 @@ void PluginCurveMap::setPaintRect(QRectF paintRect, bool changeScaleRect)
     //update scale rect !
     if (changeScaleRect)
         setScaleRect(paintToScale(paintRect));
-    //emit(mapChanged()); // no need
     *_pPaintRect = paintRect;
 }
 

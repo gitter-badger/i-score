@@ -1,4 +1,6 @@
 #include "plugincurvegrid.hpp"
+#include "plugincurvemap.hpp"
+#include "plugincurveview.hpp"
 #include <QPainter>
 #include <iostream>
 #include <cmath>

@@ -32,6 +32,7 @@
 #define AUTOMATIONVIEW_HPP
 
 #include "pluginview.hpp"
+#include "plugincurve.hpp"
 #include <QPointF>
 #include <QList>
 class QGraphicsItem;
@@ -42,16 +43,13 @@ class AutomationView : public PluginView
   Q_OBJECT
 
 private:
-  QGraphicsPathItem *_pLine;
-  QList<QPointF> _points;
-
+  PluginCurve *_pPlugincurve;
 public:
   AutomationView(QGraphicsItem *parent = 0);
+  ~AutomationView();
 
 public:
-  QPainterPath shape() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-  QRectF boundingRect() const;
 };
 
 #endif // AUTOMATIONVIEW_HPP

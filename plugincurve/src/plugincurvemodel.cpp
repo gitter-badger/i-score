@@ -28,10 +28,9 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 
-#include "plugincurve.hpp"
 #include "plugincurvepoint.hpp"
 #include "plugincurvesection.hpp"
-#include <QGraphicsScene>
+#include "plugincurvemodel.hpp"
 
 
 PluginCurveModel::PluginCurveModel(QObject *parentObject, QGraphicsObject *parentItem) :

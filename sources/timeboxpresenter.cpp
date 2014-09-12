@@ -208,10 +208,9 @@ PluginView * TimeboxPresenter::addPlugin(int pluginType, TimeboxStorey *pStorey)
       }
     case AutomationPluginType:
       {
-        PluginCurve *plugincurve = new PluginCurve(pStorey);
-        //AutomationView *automationView = new AutomationView(pStorey);
-        //plugin = qgraphicsitem_cast<PluginView*>(automationView);
-        plugin = new PluginView(plugincurve->view());
+//        PluginCurve *plugincurve = new PluginCurve(pStorey);
+        AutomationView *automationView = new AutomationView(pStorey);
+        plugin = qgraphicsitem_cast<PluginView*>(automationView);
         break;
       }
     }

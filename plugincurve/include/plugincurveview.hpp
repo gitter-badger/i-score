@@ -41,6 +41,15 @@ class PluginCurveGrid;
 class PluginCurveMap;
 class PluginCurveZoomer;
 
+/*!
+*  This class represent the grid.
+*  Permits to paint the grid. @n
+*
+*  @brief Grid
+*  @author Simon Touchard, Myriam Desainte-Catherine
+*  @date 2014
+*/
+
 class PluginCurveView : public QGraphicsObject
 {
   Q_OBJECT

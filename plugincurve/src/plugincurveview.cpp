@@ -73,6 +73,7 @@ void PluginCurveView::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
   Q_UNUSED(option)
   Q_UNUSED(widget)
   Q_UNUSED(painter)
+
 }
 
 /// @todo corriger si scene rect non défini !

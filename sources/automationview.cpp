@@ -30,35 +30,26 @@
 
 #include "automationview.hpp"
 #include "timeboxstoreybar.hpp"
+#include "plugincurve.hpp"
 #include <QGraphicsItem>
 #include <QPainterPath>
 #include <QPainter>
 
 AutomationView::AutomationView(QGraphicsItem *parent)
-  : PluginView(parent), _points()
+  : PluginView(parent)
 {
-  QPainterPath path(QPointF(0, parentItem()->boundingRect().height() - TimeboxStoreyBar::HEIGHT));
-  path.lineTo(parentItem()->boundingRect().width()-2, 0);
-  _pLine = new QGraphicsPathItem(this);
-  _pLine->setPath(path);
+  _pPlugincurve = new PluginCurve(this);
 }
 
-
-QPainterPath AutomationView::shape() const
+AutomationView::~AutomationView()
 {
-  return _pLine->shape();
+
 }
+
 
 void AutomationView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
   Q_UNUSED(option)
   Q_UNUSED(widget)
-
-  painter->setRenderHint(QPainter::Antialiasing, true);
-  _pLine->paint(painter, option, widget);
-}
-
-QRectF AutomationView::boundingRect() const
-{
-  return _pLine->boundingRect();
+  Q_UNUSED(painter)
 }
