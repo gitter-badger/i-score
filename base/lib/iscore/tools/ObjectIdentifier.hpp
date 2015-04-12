@@ -1,9 +1,13 @@
 #pragma once
-#include <iscore/tools/SettableIdentifier.hpp>
-#include <iscore/serialization/DataStreamVisitor.hpp>
-#include <iscore/serialization/JSONVisitor.hpp>
+#include <iscore/serialization/VisitorInterface.hpp>
+#include <cstdint>
+#include <utility>
+#include <QVector>
+#include <QMetaType>
 
-
+class DataStream;
+class JSON;
+using class_id_type = int32_t;
 /**
  * @brief The ObjectIdentifier class
  *
@@ -25,45 +29,45 @@ class ObjectIdentifier
 
         friend bool operator== (const ObjectIdentifier& lhs, const ObjectIdentifier& rhs)
         {
-            return (lhs.m_objectName == rhs.m_objectName) && (lhs.m_id == rhs.m_id);
+            return (lhs.m_objectType == rhs.m_objectType) && (lhs.m_id == rhs.m_id);
         }
     public:
         ObjectIdentifier() = default;
-        ObjectIdentifier(const char* name) :
-            m_objectName {name}
+        ObjectIdentifier(int32_t type) :
+            m_objectType {type}
         { }
 
-        ObjectIdentifier(QString name, boost::optional<int32_t> id) :
-            m_objectName {std::move(name) },
-                     m_id {std::move(id) }
+        ObjectIdentifier(int32_t type, int32_t id) :
+            m_objectType{std::move(type)},
+                     m_id{std::move(id)}
         { }
 
         template<typename T>
-        ObjectIdentifier(QString name, id_type<T> id) :
-            m_objectName {std::move(name) }
+        ObjectIdentifier(int32_t type, const T& id) :
+            m_objectType {std::move(type) }
         {
             if(id.val())
             {
-                m_id = id.val().get();
+                m_id = *id.val().get();
             }
         }
 
-        const QString& objectName() const
+        const int32_t& objectType() const
         {
-            return m_objectName;
+            return m_objectType;
         }
 
-        const boost::optional<int32_t>& id() const
+        const int32_t& id() const
         {
             return m_id;
         }
 
     private:
-        QString m_objectName;
-        boost::optional<int32_t> m_id;
+        int32_t m_objectType;
+        int32_t m_id;
 };
 
 Q_DECLARE_METATYPE(ObjectIdentifier)
 
-typedef QVector<ObjectIdentifier> ObjectIdentifierVector;
+using ObjectIdentifierVector = QVector<ObjectIdentifier> ;
 

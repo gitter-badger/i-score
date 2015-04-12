@@ -1,11 +1,21 @@
 #pragma once
 #include <iscore/tools/NamedObject.hpp>
 #include <iscore/tools/SettableIdentifier.hpp>
+#include <iscore/tools/ObjectIdentifier.hpp>
 #include <iscore/tools/utilsCPP11.hpp>
 #include <typeinfo>
 #include <random>
 
 // This should maybe be a mixin ?
+
+class IdentifiedObjectAbstract : public NamedObject
+{
+    public:
+        using NamedObject::NamedObject;
+        virtual int32_t id_val() const = 0;
+        virtual IdentifiedObjectAbstract* findIdentifiedChild(const ObjectIdentifier&) const
+        { return nullptr; }
+};
 
 template<typename tag>
 class IdentifiedObject : public IdentifiedObjectAbstract

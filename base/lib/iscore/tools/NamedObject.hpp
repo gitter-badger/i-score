@@ -3,8 +3,7 @@
 #include <QWidget>
 #include <QGraphicsObject>
 #include <QDebug>
-#include "iscore/serialization/VisitorInterface.hpp"
-
+#include <iscore/serialization/VisitorInterface.hpp>
 
 // TODO : QDomainObject qui contient l'objet en membre ?
 ////////////////////////////////////////////////
@@ -30,6 +29,11 @@ class NamedType : public QType
             v.writeTo(*this);
             QType::setParent(parent);
         }
+
+        int32_t class_id() const
+        {
+            return qHash(this->objectName());
+        }
 };
 
 
@@ -44,12 +48,5 @@ inline void debug_parentHierarchy(QObject* obj)
         obj = obj->parent();
     }
 }
-
-class IdentifiedObjectAbstract : public NamedObject
-{
-    public:
-        using NamedObject::NamedObject;
-        virtual int32_t id_val() const = 0;
-};
 
 #define DEMO_PIXEL_SPACING_TEST 5

@@ -12,3 +12,11 @@ iscore::IPresenter::instantiateUndoCommand(const QString& parent_name,
             name,
             data);
 }
+
+
+const QList<iscore::Document*>& iscore::IPresenter::documents()
+{
+    auto presenter = qApp->findChild<iscore::Presenter*> ("Presenter");
+    return presenter->documents();
+
+}

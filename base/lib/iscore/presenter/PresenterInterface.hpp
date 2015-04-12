@@ -4,6 +4,7 @@
 namespace iscore
 {
     class SerializableCommand;
+    class Document;
 
     namespace IPresenter
     {
@@ -19,5 +20,7 @@ namespace iscore
         instantiateUndoCommand(const QString& parent_name,
                                const QString& name,
                                const QByteArray& data);
+
+        const QList<Document*>& documents();
     }
 }

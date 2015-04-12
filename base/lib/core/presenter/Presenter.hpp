@@ -41,6 +41,9 @@ namespace iscore
             Document* currentDocument() const;
             void setCurrentDocument(Document* doc);
 
+            const QList<Document*>& documents() const
+            { return m_documents; }
+
             /**
              * @brief instantiateUndoCommand Is used to generate a Command from its serialized data.
              * @param parent_name The name of the object able to generate the command. Must be a CustomCommand.

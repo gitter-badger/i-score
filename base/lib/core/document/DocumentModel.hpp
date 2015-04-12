@@ -2,7 +2,6 @@
 #include <iscore/tools/IdentifiedObject.hpp>
 #include <iscore/selection/Selection.hpp>
 #include <set>
-#include <iscore/plugins/documentdelegate/plugin/DocumentDelegatePluginModel.hpp>
 
 namespace iscore
 {
@@ -19,6 +18,16 @@ namespace iscore
     {
             Q_OBJECT
         public:
+            IdentifiedObjectAbstract* findIdentifiedChild(const ObjectIdentifier& idtf) const override
+            {
+                if(idtf.objectType() == 0 )
+                {
+
+                }
+                return nullptr;
+
+            }
+
             DocumentModel(DocumentDelegateFactoryInterface* fact,
                           QObject* parent);
             DocumentModel(QVariant data,

@@ -1,6 +1,9 @@
 #include <QApplication>
 #include <iscore/tools/IdentifiedObject.hpp>
 #include <iscore/tools/ObjectPath.hpp>
+#include <iscore/presenter/PresenterInterface.hpp>
+#include <core/document/Document.hpp>
+#include <core/document/DocumentModel.hpp>
 
 ObjectPath ObjectPath::pathBetweenObjects(const QObject* const parent_obj, const QObject* target_object)
 {
@@ -10,9 +13,9 @@ ObjectPath ObjectPath::pathBetweenObjects(const QObject* const parent_obj, const
     auto add_parent_to_vector = [&v](const QObject * ptr)
     {
         if(auto id_obj = dynamic_cast<const IdentifiedObjectAbstract*>(ptr))
-            v.push_back({id_obj->objectName(), id_obj->id_val() });
+            v.push_back({id_obj->class_id(), id_obj->id_val() });
         else
-            v.push_back({ptr->objectName(), {}});
+            v.push_back({id_obj->class_id(), {}});
     };
 
     QString debug_objectnames;
@@ -51,12 +54,12 @@ QString ObjectPath::toString() const
 
     for(auto& obj : m_objectIdentifiers)
     {
-        s += obj.objectName();
+        s += obj.objectType();
 
         if(obj.id())
         {
             s += ".";
-            s += QString::number(*obj.id());
+            s += QString::number(obj.id());
         }
 
         s += "/";
@@ -80,37 +83,20 @@ ObjectPath ObjectPath::pathFromObject(QObject* origin_object)
 
 QObject* ObjectPath::find_impl() const
 {
-    auto parent_name = m_objectIdentifiers.at(0).objectName();
-    std::vector<ObjectIdentifier> children(m_objectIdentifiers.size() - 1);
-    std::copy(std::begin(m_objectIdentifiers) + 1,
-              std::end(m_objectIdentifiers),
-              std::begin(children));
+    using namespace std;
+    auto docs = iscore::IPresenter::documents();
+    // 1. Find the correct DocumentModel.
+    auto doc_it = std::find_if(begin(docs),
+                               end(docs),
+                               [theId = m_objectIdentifiers.at(0).id()] (iscore::Document* doc)
+                { return doc->model()->id() == id_type<iscore::DocumentModel>(theId); });
 
-    auto objs = qApp->findChildren<IdentifiedObjectAbstract*> (parent_name);
-    NamedObject* obj = findById(objs, *m_objectIdentifiers.at(0).id());
+    Q_ASSERT(doc_it != end(docs));
 
-    for(const auto& currentObjIdentifier : children)
+    IdentifiedObjectAbstract* obj = (*doc_it)->model();
+    for(int i = 1; i < m_objectIdentifiers.size(); i++)
     {
-        if(currentObjIdentifier.id())
-        {
-            auto children = obj->findChildren<IdentifiedObjectAbstract*> (currentObjIdentifier.objectName(),
-                            Qt::FindDirectChildrenOnly);
-
-            obj = findById(children,
-                           *currentObjIdentifier.id());
-        }
-        else
-        {
-            auto child = obj->findChild<NamedObject*> (currentObjIdentifier.objectName(),
-                         Qt::FindDirectChildrenOnly);
-
-            if(!child)
-            {
-                throw std::runtime_error("ObjectPath::find  Error! Child not found");
-            }
-
-            obj = child;
-        }
+        obj = obj->findIdentifiedChild(m_objectIdentifiers.at(i));
     }
 
     return obj;

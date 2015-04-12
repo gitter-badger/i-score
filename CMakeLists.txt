@@ -52,4 +52,8 @@ else()
   set(BUILD_SHARED_LIBS ON)
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_definitions(-DISCORE_DEBUG)
+endif()
+
 add_subdirectory(base)

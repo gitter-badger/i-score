@@ -1,6 +1,7 @@
 #pragma once
 #include <iscore/tools/ObjectIdentifier.hpp>
 #include <QVector>
+#include <QObject>
 
 /**
  * @brief The ObjectPath class
@@ -14,6 +15,9 @@
  * @code
  *	ObjectPath p{ {"MyObject", {}}, {"SomeSubObjectInACollection", 27} };
  * @endcode
+ *
+ *
+ * NOTE : for optimization purposes, a path begins on a Document.
 */
 class ObjectPath
 {
@@ -81,14 +85,13 @@ class ObjectPath
         template<typename T>
         T* find() const
         {
+#ifdef ISCORE_DEBUG
             auto ptr = dynamic_cast<T*>(find_impl());
-
-            if(!ptr)
-            {
-                throw std::runtime_error("Invalid cast on ObjectPath::find<T>");
-            }
-
+            Q_ASSERT(ptr);
             return ptr;
+#else
+        return static_cast<T*>(find_impl());
+#endif
         }
 
         const ObjectIdentifierVector& vec()
