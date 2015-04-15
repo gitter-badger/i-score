@@ -70,74 +70,29 @@ void BaseElementModel::initializeNewDocument(const FullViewConstraintViewModel *
 {
     using namespace Scenario::Command;
     auto constraint_model = viewmodel->model();
+    auto base_constraint_path = iscore::IDocument::path(m_baseConstraint);
 
-    AddProcessToConstraint cmd1
-    {
-        {
-            {"BaseElementModel", this->id()},
-            {"BaseConstraintModel", {}}
-        },
-        "Scenario"
-    };
+    AddProcessToConstraint cmd1{ObjectPath{base_constraint_path}, "Scenario" };
     cmd1.redo();
-    auto scenarioId = constraint_model->processes().front()->id();
 
-    AddBoxToConstraint cmd2
-    {
-        ObjectPath{
-            {"BaseElementModel", this->id()},
-            {"BaseConstraintModel", {}}
-        }
-    };
+    AddBoxToConstraint cmd2{ObjectPath{base_constraint_path}};
     cmd2.redo();
     auto box = constraint_model->boxes().front();
 
-    ShowBoxInViewModel cmd3 {
-        ObjectPath{
-            {"BaseElementModel", this->id()},
-            {"BaseConstraintModel", {}},
-            {"FullViewConstraintViewModel", viewmodel->id()}
-        },
+    ShowBoxInViewModel cmd3{
+        iscore::IDocument::path(m_baseConstraint->fullView()),
         box->id() };
     cmd3.redo();
 
-    AddDeckToBox cmd4
-    {
-        ObjectPath{
-            {"BaseElementModel", this->id()},
-            {"BaseConstraintModel", {}},
-            {"BoxModel", box->id() }
-        }
-    };
+    AddDeckToBox cmd4{iscore::IDocument::path(m_baseConstraint->boxes().front())};
     cmd4.redo();
-    auto deckId = box->decks().front()->id();
 
-    ResizeDeckVertically cmd5
-    {
-        ObjectPath{
-            {"BaseElementModel", this->id()},
-            {"BaseConstraintModel", {}},
-            {"BoxModel", box->id() },
-            {"DeckModel", deckId}
-        },
-        1500
-    };
+    auto deck_path = iscore::IDocument::path(m_baseConstraint->boxes().front()->decks().front());
+    ResizeDeckVertically cmd5{ObjectPath{deck_path}, 1500};
     cmd5.redo();
 
-    AddProcessViewModelToDeck cmd6
-    {
-        {
-            {"BaseElementModel", this->id()},
-            {"BaseConstraintModel", {}},
-            {"BoxModel", box->id() },
-            {"DeckModel", deckId}
-        },
-        {
-            {"BaseElementModel", this->id()},
-            {"BaseConstraintModel", {}},
-            {"ScenarioModel", scenarioId}
-        }
-    };
+    AddProcessViewModelToDeck cmd6{ObjectPath{deck_path},
+                                  iscore::IDocument::path(constraint_model->processes().front())};
     cmd6.redo();
 }
 

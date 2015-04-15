@@ -18,7 +18,6 @@ namespace iscore
      */
     class DocumentPresenter : public NamedObject
     {
-            Q_OBJECT
         public:
             DocumentPresenter(DocumentDelegateFactoryInterface*,
                               DocumentModel*,

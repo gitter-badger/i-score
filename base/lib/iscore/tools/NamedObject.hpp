@@ -30,12 +30,7 @@ class NamedType : public QType
             QType::setParent(parent);
         }
 
-        int32_t class_id() const
-        {
-            return qHash(this->objectName());
-        }
 };
-
 
 using NamedObject = NamedType<QObject>;
 

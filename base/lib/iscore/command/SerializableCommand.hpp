@@ -23,3 +23,9 @@ namespace iscore
             virtual void deserializeImpl(QDataStream&) = 0;
     };
 }
+
+
+// They will be used in almost every command...
+#include <iscore/tools/IdentifiedObject.hpp>
+#include <iscore/tools/ObjectPath.hpp>
+#include <iscore/serialization/DataStreamVisitor.hpp>

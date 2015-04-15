@@ -1,6 +1,7 @@
 #pragma once
 #include <iscore/command/SerializableCommand.hpp>
 #include <iscore/tools/ObjectPath.hpp>
+#include <iscore/tools/IdentifiedObject.hpp>
 
 class ConstraintModel;
 

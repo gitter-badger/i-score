@@ -16,8 +16,7 @@ using class_id_type = int32_t;
  *
  * Example:
  * @code
- *	ObjectIdentifier ob{"TheObjectName", {}}; // id-less
- *	ObjectIdentifier ob{"TheObjectName", 34}; // with id
+ * TODO
  * @endcode
  */
 class ObjectIdentifier

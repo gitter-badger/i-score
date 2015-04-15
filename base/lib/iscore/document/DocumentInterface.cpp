@@ -31,6 +31,11 @@ iscore::Document* iscore::IDocument::documentFromObject(const QObject& obj)
 
 ObjectPath iscore::IDocument::path(const QObject* obj)
 {
+    auto doc = documentFromObject(obj);
+    qDebug() << doc->objectName() << (void*) doc;
+    qDebug() << "path" << (void*) doc->model();
+    qDebug() << doc->model()->objectName();;
+
     return ObjectPath::pathBetweenObjects(documentFromObject(obj)->model(), obj);
 }
 

@@ -20,6 +20,7 @@ namespace iscore
         public:
             IdentifiedObjectAbstract* findIdentifiedChild(const ObjectIdentifier& idtf) const override
             {
+                //TODO
                 if(idtf.objectType() == 0 )
                 {
 

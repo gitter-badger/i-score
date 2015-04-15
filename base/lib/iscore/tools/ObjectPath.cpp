@@ -9,13 +9,18 @@ ObjectPath ObjectPath::pathBetweenObjects(const QObject* const parent_obj, const
 {
     QVector<ObjectIdentifier> v;
 
+    qDebug() << Q_FUNC_INFO <<parent_obj->objectName();
     auto current_obj = target_object;
     auto add_parent_to_vector = [&v](const QObject * ptr)
     {
         if(auto id_obj = dynamic_cast<const IdentifiedObjectAbstract*>(ptr))
-            v.push_back({id_obj->class_id(), id_obj->id_val() });
+            v.push_back({id_obj->class_id_dyn(), id_obj->id_val() });
         else
-            v.push_back({id_obj->class_id(), {}});
+        {
+            // We should not go here.
+            Q_ASSERT(1 == 0);
+            v.push_back({id_obj->class_id_dyn(), {}});
+        }
     };
 
     QString debug_objectnames;

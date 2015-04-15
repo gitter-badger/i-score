@@ -23,7 +23,6 @@ namespace iscore
      */
     class PluginManager : public NamedObject
     {
-            Q_OBJECT
             friend class Application;
         public:
             PluginManager(QObject* parent) :

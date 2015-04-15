@@ -29,6 +29,7 @@ class TimeBox;
 class ConstraintModel : public IdentifiedObject<ConstraintModel>
 {
         Q_OBJECT
+        ISCORE_OBJECT(ConstraintModel)
 
         // TODO must go in view model
         Q_PROPERTY(double heightPercentage

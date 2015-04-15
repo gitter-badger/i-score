@@ -91,8 +91,7 @@ void BaseElementPresenter::deselectAll()
 
 void BaseElementPresenter::setDisplayedObject(ObjectPath path)
 {
-    if(path.vec().last().objectName() == "ConstraintModel"
-            || path.vec().last().objectName() == "BaseConstraintModel")
+    if(path.vec().last().objectType() == ConstraintModel::class_id())
     {
         setDisplayedConstraint(path.find<ConstraintModel>());
     }

@@ -15,8 +15,8 @@ AddProcessToConstraint::AddProcessToConstraint(ObjectPath&& constraintPath, QStr
     SerializableCommand {"ScenarioControl",
                          className(),
                          description()},
-m_path {std::move(constraintPath) },
-m_processName {process}
+    m_path {std::move(constraintPath) },
+    m_processName {process}
 {
     auto constraint = m_path.find<ConstraintModel>();
     m_createdProcessId = getStrongId(constraint->processes());

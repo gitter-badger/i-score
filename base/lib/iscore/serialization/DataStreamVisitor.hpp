@@ -108,6 +108,7 @@ class Visitor<Writer<DataStream>>
         QDataStream m_stream;
 };
 
+// TODO optimize this by constructing the visitor with the stream argument
 template<typename T>
 QDataStream& operator<< (QDataStream& stream, const T& obj)
 {

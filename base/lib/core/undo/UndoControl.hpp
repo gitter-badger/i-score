@@ -6,6 +6,7 @@ namespace iscore
 {
     class UndoControl : public iscore::PluginControlInterface
     {
+            Q_OBJECT
         public:
             UndoControl(QObject* parent);
             ~UndoControl();

@@ -2,8 +2,6 @@
 
 #include <iscore/command/SerializableCommand.hpp>
 
-#include <iscore/tools/ObjectPath.hpp>
-
 
 class EventModel;
 class TimeNodeModel;

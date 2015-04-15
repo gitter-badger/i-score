@@ -1,5 +1,6 @@
 #include "AddPoint.hpp"
 #include <Automation/AutomationModel.hpp>
+
 using namespace iscore;
 #define CMD_UID 2000
 #define CMD_NAME "AddPoint"

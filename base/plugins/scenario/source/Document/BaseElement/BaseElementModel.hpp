@@ -19,6 +19,7 @@ class ProcessViewModelInterface;
 class BaseElementModel : public iscore::DocumentDelegateModelInterface
 {
         Q_OBJECT
+        ISCORE_OBJECT(BaseElementModel)
 
     public:
         BaseElementModel(QVariant data, QObject* parent);

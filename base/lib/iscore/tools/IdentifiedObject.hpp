@@ -15,13 +15,30 @@ class IdentifiedObjectAbstract : public NamedObject
         virtual int32_t id_val() const = 0;
         virtual IdentifiedObjectAbstract* findIdentifiedChild(const ObjectIdentifier&) const
         { return nullptr; }
+
+        // Class id
+        virtual int32_t class_id_dyn() const = 0;
 };
+
+
+#define ISCORE_OBJECT(name) \
+    public: \
+    static /*constexpr*/ int32_t class_id() { return qHash(#name); } \
+    int32_t class_id_dyn() const override { return class_id(); } \
+    private:
 
 template<typename tag>
 class IdentifiedObject : public IdentifiedObjectAbstract
 {
 
     public:
+        // Class id. TODO Optimize with ISCORE_OBJECT (one day...)
+        int32_t class_id_dyn() const override
+        {
+            return qHash(this->metaObject()->className());
+        }
+
+        // Instance id
         template<typename... Args>
         IdentifiedObject(id_type<tag> id,
                          Args&& ... args) :

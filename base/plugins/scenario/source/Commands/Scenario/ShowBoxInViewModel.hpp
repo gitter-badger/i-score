@@ -1,6 +1,5 @@
 #pragma once
 #include <iscore/command/SerializableCommand.hpp>
-#include <iscore/tools/ObjectPath.hpp>
 
 class AbstractConstraintViewModel;
 class ConstraintModel;

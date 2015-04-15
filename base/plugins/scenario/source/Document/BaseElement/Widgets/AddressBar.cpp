@@ -1,6 +1,9 @@
 #include "AddressBar.hpp"
 #include "ClickableLabel.hpp"
 
+#include "Document/BaseElement/BaseElementModel.hpp"
+#include "Document/Constraint/ConstraintModel.hpp"
+
 AddressBar::AddressBar(QWidget* parent) :
     QWidget {parent},
 m_layout {new QHBoxLayout{this}}
@@ -29,10 +32,10 @@ void AddressBar::setTargetObject(ObjectPath&& path)
     for(auto& identifier : m_currentPath)
     {
         i++;
-        if(identifier.objectName() != "BaseConstraintModel"
-        && identifier.objectName() != "ConstraintModel")
+        if(identifier.objectType() != ConstraintModel::class_id())
             continue;
 
+        /* TODO FIXME
         auto lab = new ClickableLabel{QString{"%1%2"}
                                           .arg(identifier.objectName())
                                           .arg(identifier.id()
@@ -45,6 +48,7 @@ void AddressBar::setTargetObject(ObjectPath&& path)
                 this, SLOT(on_elementClicked(ClickableLabel*)));
 
         m_layout->addWidget(lab);
+        */
         m_layout->addWidget(new QLabel {"/"});
     }
 

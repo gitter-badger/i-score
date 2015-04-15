@@ -25,6 +25,7 @@ namespace iscore
      */
     class Presenter : public NamedObject
     {
+            // TODO is it necessary ? Maybe use singleton like QtCreator
             Q_OBJECT
         public:
             Presenter(iscore::View* view, QObject* parent);
