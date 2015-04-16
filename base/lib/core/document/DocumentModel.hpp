@@ -21,12 +21,11 @@ namespace iscore
             IdentifiedObjectAbstract* findIdentifiedChild(const ObjectIdentifier& idtf) const override
             {
                 //TODO
-                if(idtf.objectType() == 0 )
+                if(idtf.idInParent() == 0 )
                 {
 
                 }
                 return nullptr;
-
             }
 
             DocumentModel(DocumentDelegateFactoryInterface* fact,

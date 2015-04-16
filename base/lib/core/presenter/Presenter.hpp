@@ -67,7 +67,7 @@ namespace iscore
             void currentDocumentChanged(Document* newDoc);
 
         private:
-            void addDocument(Document* doc);
+            void setupDocument(Document* doc);
             void setupMenus();
 
             View* m_view {};

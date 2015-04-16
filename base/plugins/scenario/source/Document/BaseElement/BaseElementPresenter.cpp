@@ -91,7 +91,9 @@ void BaseElementPresenter::deselectAll()
 
 void BaseElementPresenter::setDisplayedObject(ObjectPath path)
 {
-    if(path.vec().last().objectType() == ConstraintModel::class_id())
+    // TODO we will be able to make some kind of mapping between path and pointer
+    // directly and in a very efficient way. But we must not compare like this.
+    if(path.vec().last().idInParent() == ConstraintModel::class_id())
     {
         setDisplayedConstraint(path.find<ConstraintModel>());
     }

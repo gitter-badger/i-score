@@ -28,22 +28,22 @@ class ObjectIdentifier
 
         friend bool operator== (const ObjectIdentifier& lhs, const ObjectIdentifier& rhs)
         {
-            return (lhs.m_objectType == rhs.m_objectType) && (lhs.m_id == rhs.m_id);
+            return (lhs.m_idInParent == rhs.m_idInParent) && (lhs.m_id == rhs.m_id);
         }
     public:
         ObjectIdentifier() = default;
         ObjectIdentifier(int32_t type) :
-            m_objectType {type}
+            m_idInParent {type}
         { }
 
         ObjectIdentifier(int32_t type, int32_t id) :
-            m_objectType{std::move(type)},
+            m_idInParent{std::move(type)},
                      m_id{std::move(id)}
         { }
 
         template<typename T>
         ObjectIdentifier(int32_t type, const T& id) :
-            m_objectType {std::move(type) }
+            m_idInParent {std::move(type) }
         {
             if(id.val())
             {
@@ -51,9 +51,9 @@ class ObjectIdentifier
             }
         }
 
-        const int32_t& objectType() const
+        const int32_t& idInParent() const
         {
-            return m_objectType;
+            return m_idInParent;
         }
 
         const int32_t& id() const
@@ -62,7 +62,7 @@ class ObjectIdentifier
         }
 
     private:
-        int32_t m_objectType;
+        int32_t m_idInParent;
         int32_t m_id;
 };
 

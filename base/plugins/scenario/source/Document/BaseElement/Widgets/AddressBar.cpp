@@ -32,7 +32,7 @@ void AddressBar::setTargetObject(ObjectPath&& path)
     for(auto& identifier : m_currentPath)
     {
         i++;
-        if(identifier.objectType() != ConstraintModel::class_id())
+        if(identifier.idInParent() != ConstraintModel::class_id())
             continue;
 
         /* TODO FIXME

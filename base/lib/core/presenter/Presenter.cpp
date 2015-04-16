@@ -93,22 +93,26 @@ void Presenter::setCurrentDocument(Document* doc)
 
 void Presenter::newDocument(DocumentDelegateFactoryInterface* doctype)
 {
-    addDocument(new Document{doctype, m_view, this});
+    std::allocator<Document> allocator;
+    Document* doc = allocator.allocate(1);
+    m_documents.push_back(doc);
+    allocator.construct(doc, doctype, m_view, this);
+
+    setupDocument(new Document{doctype, m_view, this});
 }
 
 Document* Presenter::loadDocument(QVariant data,
                                   DocumentDelegateFactoryInterface* doctype)
 {
     auto doc = new Document{data, doctype, m_view, this};
-    addDocument(doc);
+    m_documents.push_back(doc);
+    setupDocument(doc);
 
     return doc;
 }
 
-void Presenter::addDocument(Document* doc)
+void Presenter::setupDocument(Document* doc)
 {
-    m_documents.push_back(doc);
-
     for(auto& panel : m_panelPresenters)
     {
         doc->setupNewPanel(panel.first, panel.second);

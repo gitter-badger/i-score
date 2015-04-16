@@ -9,7 +9,6 @@ ObjectPath ObjectPath::pathBetweenObjects(const QObject* const parent_obj, const
 {
     QVector<ObjectIdentifier> v;
 
-    qDebug() << Q_FUNC_INFO <<parent_obj->objectName();
     auto current_obj = target_object;
     auto add_parent_to_vector = [&v](const QObject * ptr)
     {
@@ -59,7 +58,7 @@ QString ObjectPath::toString() const
 
     for(auto& obj : m_objectIdentifiers)
     {
-        s += obj.objectType();
+        s += obj.idInParent();
 
         if(obj.id())
         {
